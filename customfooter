@@ -1,0 +1,157 @@
+<?php
+
+register_nav_menus( array(
+	'header_menu' => 'My Custom Header Menu',
+	'footer_menu' => 'My Custom Footer Menu',
+) );
+
+?>
+
+
+
+  <?php
+
+function ourWidget(){
+  
+  /*  for home page scroller   */
+  
+    register_sidebar(array(
+  'name'=>'footer',
+  'id'=>'footer',
+  'before_widget'=>'<div class="foot-links">',
+  'after_widget'=>'</div>'
+  /* 'before_title'=>'<div class="sidtitle">',
+  'after_widget'=>'</h3>'  */ 
+  )); 
+    
+}
+
+
+
+add_action('widgets_init','ourWidget');
+
+  
+add_theme_support( 'post-thumbnails' );
+
+$defaults = array(
+  'default-image'          => '',
+  'width'                  => 0,
+  'height'                 => 0,
+  'flex-height'            => false,
+  'flex-width'             => false,
+  'uploads'                => true,
+  'random-default'         => false,
+  'header-text'            => true,
+  'default-text-color'     => '',
+  'wp-head-callback'       => '',
+  'admin-head-callback'    => '',
+  'admin-preview-callback' => '',
+);
+add_theme_support( 'custom-header', $defaults );
+
+?>
+<?php
+function my_custom_post() {
+     // custom post type
+   register_post_type( 'home-slider', array(
+    'labels' => array(
+      'name' => __('Slider'),
+      'singular_name' => __('sliderss'),
+    ),
+    'supports' => array('title', 'thumbnail'),
+    'public' => true,
+    'has_archive' => true,
+   ) );}
+   add_action( 'init', 'my_custom_post' );  
+
+
+
+   register_post_type( 'blogs', array(
+    'labels' => array(
+      'name' => __('Blogs'),
+      'singular_name' => __('Blogs'),
+    ),
+    'supports' => array('title', 'thumbnail','editor'),
+    'public' => true,
+    'has_archive' => true,
+   ) ); 
+       add_action( 'init', 'my_custom_post' ); 
+
+
+
+register_sidebar(array(
+'name'=>'Footer Area 1',
+'id'=>'footer-1',
+'description'=>'Apperance in the footer area',
+'before_widget'=>'<aside id="%1$s" class="widget %2$s">',
+'after_widget'=>'</aside>',
+'before_title'=>'<h3 class="widget-title">',
+'after_title'=>'</h3>',));
+
+
+
+register_sidebar(array(
+'name'=>'Footer Area 2',
+'id'=>'footer-2',
+'description'=>'Apperance in the footer area',
+'before_widget'=>'<aside id="%1$s" class="widget %2$s">',
+'after_widget'=>'</aside>',
+'before_title'=>'<h3 class="widget-title">',
+'after_title'=>'</h3>',));
+
+
+register_sidebar(array(
+'name'=>'Footer Area 3',
+'id'=>'footer-3',
+'description'=>'Apperance in the footer area',
+'before_widget'=>'<aside id="%1$s" class="widget %2$s">',
+'after_widget'=>'</aside>',
+'before_title'=>'<h3 class="widget-title">',
+'after_title'=>'</h3>',));
+?>
+
+
+in footer.php write the following code
+<!--Footer Start-->
+
+<div class="container-fluid">
+  <div class="row footer_sec1">
+    <div class="container">
+      <div class="col-md-4 col-sm-4 col-lg-4">
+        <div class="ftr_sm_sec">
+          <?php
+          if(is_active_sidebar('footer-1')){dynamic_sidebar('footer-1');}
+          ?>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-4 col-lg-4">
+        <div class="ftr_sm_sec ftr_sm_sec2">
+        <?php
+        if(is_active_sidebar('footer-2')){dynamic_sidebar('footer-2');}
+        ?>
+        </div>
+      </div> 
+    <div class="col-md-4 col-sm-4 col-lg-4">
+      <div class="ftr_sm_sec ftr_sm_sec3">
+      <?php
+      if(is_active_sidebar('footer-3')){dynamic_sidebar('footer-3');}
+      ?>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Footer End-->
+
+<script type="text/javascript" src="<?php bloginfo('stylesheet_directory'); ?>/js/jquery.min.js"></script>
+<script type="text/javascript" src="<?php bloginfo('stylesheet_directory'); ?>/js/bootstrap.js"></script>
+<script>
+$(document).ready(function(){
+  $('.dropdown-toggle2').click(function(){
+  $('#srchdrp').toggle('1000');
+  $("i",this).toggleClass("fa-search fa-times-circle");
+  });
+});
+</script>
+<?php wp_footer(); ?>
+ </body>
+</html>
